@@ -200,21 +200,31 @@ permissões por conjunto em vez de atribuir uma a uma.
 Coisas que o template **não** resolve por você e que valem revisão antes de ir
 para produção:
 
-### Quase todas as rotas nativas só checam autenticação
+### ACL explícita por método do controller
 
-Dos módulos que já vêm no template, **apenas a rota de atribuição de permissão
-a papel declara autorização por ACL**:
+As rotas de gestão de permissões e grupos de permissões declaram ACL nos
+controllers, assim como a atribuição de permissões a um papel:
 
 ```ts
+// src/modules/users/infra/https/controllers/PermissaoGrupoController.ts
+@RequiredPermission(ACL.grupo.ver)
+public findAll(...) { ... }
+
 // src/modules/users/infra/https/controllers/RoleController.ts
 @RequiredPermission(ACL.roles.permissions.update)
 public addPermissionByRoleId(...) { ... }
 ```
 
+No catálogo do módulo users, os grants usados por esses controllers são
+`permissao:ver`, `permissao:criar`, `permissao:editar`,
+`permissao:excluir`, `grupo:ver`, `grupo:criar`, `grupo:editar` e
+`grupo:excluir`. Os grants continuam dinâmicos e precisam ser atribuídos aos
+papéis/usuários conforme as regras do produto.
+
 As demais rotas protegidas usam `verifyToken` sem ACL; `/api/notifications` e
-algumas rotas de cadastro continuam públicas conforme o comportamento atual. Na
-prática, **qualquer usuário autenticado consegue listar e alterar os recursos
-protegidos que ainda não declaram uma permissão**.
+algumas rotas de cadastro continuam públicas conforme o comportamento atual.
+Uma rota protegida sem decorator continua acessível a qualquer usuário
+autenticado.
 
 A máquina de RBAC está pronta e testada. Para aplicar ACL a uma rota de um
 módulo, adicione a chave ao catálogo local e marque o método do controller:

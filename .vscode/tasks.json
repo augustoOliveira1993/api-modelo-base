@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "API: lint",
+      "type": "npm",
+      "script": "lint",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "API: typecheck",
+      "type": "npm",
+      "script": "typecheck",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "API: build",
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "API: testes",
+      "type": "npm",
+      "script": "test",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "API: fronteiras",
+      "type": "npm",
+      "script": "check:boundaries",
+      "problemMatcher": [],
+      "group": "test"
+    }
+  ]
+}

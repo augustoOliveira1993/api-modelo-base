@@ -1,6 +1,6 @@
-import { ACL } from '@modules/${parentModule}/permissions/ACL';
+import { ACL } from '@modules/users/permissions/ACL';
 import { RequiredPermission } from '@shared/permissions/RequiredPermission';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import FindAllService from '@modules/users/services/permissao/FindAllService';
@@ -9,13 +9,15 @@ import DeleteService from '@modules/users/services/permissao/DeleteService';
 import FindByIdService from '@modules/users/services/permissao/FindByIdService';
 import UpdateService from '@modules/users/services/permissao/UpdateService';
 
-export default class RoleController {
+export default class PermissaoController {
+  @RequiredPermission(ACL.permissao.ver)
   public async findAll(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(FindAllService);
     const result = await service.execute(req.query);
     return res.json(result);
   }
 
+  @RequiredPermission(ACL.permissao.criar)
   public async create(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(CreateService);
     const result = await service.execute(req.body);
@@ -23,18 +25,21 @@ export default class RoleController {
     return res.json(result);
   }
 
+  @RequiredPermission(ACL.permissao.excluir)
   public async delete(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(DeleteService);
     const result = await service.execute(req.params.id as string);
     return res.json(result);
   }
 
+  @RequiredPermission(ACL.permissao.ver)
   public async findById(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(FindByIdService);
     const result = await service.execute(req.params.id as string);
     return res.json(result);
   }
 
+  @RequiredPermission(ACL.permissao.editar)
   public async update(req: Request, res: Response): Promise<Response> {
     const service = container.resolve(UpdateService);
     const result = await service.execute(req.params.id as string, req.body);

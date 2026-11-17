@@ -23,4 +23,6 @@ test('OpenAPI distinguishes public routes and documents auth and permission erro
   assert.equal(openApiDocument.paths['/notifications'].get?.security, undefined);
   assert.ok(openApiDocument.paths['/roles/{idRole}/permissions'].post?.responses['401']);
   assert.ok(openApiDocument.paths['/roles/{idRole}/permissions'].post?.responses['403']);
+  assert.ok(openApiDocument.paths['/permissoes'].get?.responses['403']);
+  assert.ok(openApiDocument.paths['/permissao-grupos'].get?.responses['403']);
 });

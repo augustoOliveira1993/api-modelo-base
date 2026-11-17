@@ -228,6 +228,8 @@ export const openApiDocument: IOpenApiDocument = {
     { name: 'Auth', description: 'Autenticação, sessão e usuário logado' },
     { name: 'Users', description: 'Gestão de usuários' },
     { name: 'Roles', description: 'Gestão de perfis' },
+    { name: 'Permissions', description: 'Gestão de permissões' },
+    { name: 'PermissionGroups', description: 'Gestão de grupos de permissões' },
     { name: 'Logs', description: 'Auditoria e registros de operação' },
     { name: 'Notifications', description: 'Notificações' },
   ],
@@ -278,6 +280,8 @@ export const openApiDocument: IOpenApiDocument = {
     },
     ...crudPaths('/users', 'Users', 'User', { publicOperations: ['post'] }),
     ...crudPaths('/roles', 'Roles', 'Role'),
+    ...crudPaths('/permissoes', 'Permissions', 'Permission'),
+    ...crudPaths('/permissao-grupos', 'PermissionGroups', 'PermissionGroup'),
     ...crudPaths('/logs', 'Logs', 'Log'),
     ...crudPaths('/notifications', 'Notifications', 'Notification', { publicAll: true }),
     '/roles/{idRole}/permissions': {
@@ -365,6 +369,24 @@ export const openApiDocument: IOpenApiDocument = {
           _id: { type: 'string' },
           name: { type: 'string' },
           description: { type: 'string' },
+        },
+      },
+      Permission: {
+        type: 'object',
+        required: ['name'],
+        properties: {
+          _id: { type: 'string' },
+          name: { type: 'string' },
+          roles: { type: 'array', items: { type: 'string' } },
+          permissao_grupos: { type: 'array', items: { type: 'string' } },
+        },
+      },
+      PermissionGroup: {
+        type: 'object',
+        required: ['name'],
+        properties: {
+          _id: { type: 'string' },
+          name: { type: 'string' },
         },
       },
       Log: {
