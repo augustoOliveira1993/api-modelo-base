@@ -1,0 +1,17 @@
+{
+  "$comment": [
+    "Violacoes de fronteira ja existentes quando a barreira foi criada (Fase 1).",
+    "NAO adicione entradas manualmente: elas so devem diminuir.",
+    "Regenere com: yarn check:boundaries --update-baseline",
+    "O objetivo das fases 2 a 4 e zerar esta lista."
+  ],
+  "generatedAt": "2026-11-17",
+  "totals": {
+    "cross-module-controller": 1,
+    "shared-imports-model": 1
+  },
+  "violations": [
+    "cross-module-controller|src/modules/users/infra/https/routes/authRouter.ts|@modules/session/infra/https/controllers/SessionController",
+    "shared-imports-model|src/shared/middlewares/authMiddleware.ts|@modules/users/infra/mongo/models/User"
+  ]
+}

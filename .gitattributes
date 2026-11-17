@@ -1,0 +1,22 @@
+# Normaliza line endings: LF no repositório e no working tree.
+# Pré-requisito para conseguir comparar/mesclar este template com projetos
+# derivados (o corpus-back já usa LF; sem isto todo diff acusa 100% de diferença).
+* text=auto eol=lf
+
+# Scripts que só rodam no Windows precisam de CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binários — nunca normalizar.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.xlsx binary
+*.7z binary
+*.gz binary
+
+14112024_1552_pos_new.json filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Backend Base TS"
+  short_description: "Workflows for this scalable API template"
+  default_prompt: "Use $backend-base-ts-template to evolve this backend template while following its module, DI, MongoDB, auth, and scalability conventions."
+
+policy:
+  allow_implicit_invocation: true

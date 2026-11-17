@@ -1,0 +1,89 @@
+{
+  "$comment": [
+    "Mapa de contextos delimitados (bounded contexts) do backend-base-ts.",
+    "Cada modulo de src/modules pertence a exatamente um contexto.",
+    "O agrupamento espelha src/shared/infra/https/routes/domains/*.routes.ts.",
+    "Usado por scripts/check-boundaries.ts para detectar vazamento entre fronteiras.",
+    "Ao criar um modulo novo, adicione-o ao contexto correspondente (ou crie um contexto novo)."
+  ],
+  "contexts": {
+    "platform": {
+      "description": "Identidade, sessao, auditoria, notificacao e tenant. Acompanha o template e nunca e desligavel.",
+      "modules": ["users", "session", "log", "notification", "loja"]
+    },
+    "pessoas": {
+      "description": "Cadastro de pessoas fisicas/juridicas e seus papeis.",
+      "modules": ["pessoa", "cliente", "colaborador", "fornecedor", "vendedor"]
+    },
+    "cadastros": {
+      "description": "Tabelas de apoio e parametrizacao compartilhadas pelos demais contextos.",
+      "modules": [
+        "bairro",
+        "cargo",
+        "centroCusto",
+        "cidade",
+        "contaCorrente",
+        "convenio",
+        "documento",
+        "formaPagamento",
+        "gerencia",
+        "meioPagamento",
+        "motivoTroca",
+        "parametro",
+        "planoPagamento",
+        "setor",
+        "tabelaPreco",
+        "unidadeMedida"
+      ]
+    },
+    "estoque": {
+      "description": "Itens, movimentacao de estoque, entradas, saidas e inventario.",
+      "modules": [
+        "item",
+        "deposito",
+        "entrada",
+        "saida",
+        "transferencia",
+        "inventario"
+      ]
+    },
+    "financeiro": {
+      "description": "Caixa, movimentos e saldos.",
+      "modules": ["caixa"]
+    },
+    "hospedagem": {
+      "description": "Regras de negocio de hotelaria: estadias, quartos, reservas e governanca.",
+      "modules": [
+        "estadia",
+        "reserva",
+        "regraPrecoQuarto",
+        "tarefaQuarto",
+        "turnoCamareira",
+        "lembrete",
+        "objetoEsquecido",
+        "ocorrenciaVeiculos",
+        "pesquisaSatisfacao",
+        "comandaHistorico"
+      ]
+    },
+    "operacional": {
+      "description": "Leitura agregada entre contextos: dashboards e relatorios.",
+      "modules": ["dashboard", "relatorio"]
+    },
+    "confeccao": {
+      "description": "Vertical de exemplo (ver docs/NOVO_VERTICAL.md): producao de confeccao, ex. fabrica de camisetas esportivas. Ordem de producao referencia o produto acabado via item (estoque), sem importar model nem repositorio concreto de outro contexto.",
+      "modules": ["ordem-producao"]
+    }
+  },
+  "composition": {
+    "$comment": [
+      "Arquivos que sao composition root: podem importar qualquer modulo por definicao.",
+      "Suportam '*' como curinga de um segmento e '**' como curinga recursivo."
+    ],
+    "files": [
+      "src/shared/container/index.ts",
+      "src/shared/infra/https/routes/**",
+      "src/configs/seeds/**"
+    ]
+  }
+}

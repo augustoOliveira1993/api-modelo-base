@@ -1,0 +1,41 @@
+{
+  "$comment": [
+    "Exemplo de instalacao para o vertical de exemplo 'confeccao' (fabrica de",
+    "camisetas esportivas) descrito em docs/NOVO_VERTICAL.md.",
+    "Copie para modules.json (ou use MODULES=... com a mesma lista) para subir",
+    "o backend nessa configuracao. Fecho de dependencias ja resolvido e",
+    "validado pelo loader no boot -- ver docs/MODULES.md.",
+    "",
+    "base (platform): users, session, log, notification, loja",
+    "cadastros: parametro, fornecedor, deposito, tabelaPreco, unidadeMedida,",
+    "           formaPagamento, meioPagamento",
+    "pessoas: pessoa, cliente",
+    "estoque (materia-prima e produto acabado): entrada, item, saida,",
+    "         transferencia, inventario",
+    "financeiro: caixa",
+    "confeccao (especifico do vertical): ordem-producao"
+  ],
+  "modules": [
+    "users",
+    "session",
+    "log",
+    "notification",
+    "loja",
+    "parametro",
+    "pessoa",
+    "cliente",
+    "fornecedor",
+    "deposito",
+    "tabelaPreco",
+    "unidadeMedida",
+    "formaPagamento",
+    "meioPagamento",
+    "entrada",
+    "item",
+    "saida",
+    "transferencia",
+    "inventario",
+    "caixa",
+    "ordem-producao"
+  ]
+}

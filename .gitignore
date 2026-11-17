@@ -1,0 +1,20 @@
+dist
+keys/
+node_modules
+.env
+
+yarn-error.log
+
+# Ignorando os arquivos de logs
+logs
+
+ecosystem.homologacao.config.js
+
+src/modules/planoManutencao/services/planoManutencao/dataSheets/*
+
+tmp
+
+# Fixtures dos testes de fronteira (tests/unit/check-boundaries.test.js).
+# Sao removidas no finally do withFixture; isto e so a rede de seguranca para
+# quando o processo morre no meio do teste.
+tmp-boundaries-*/

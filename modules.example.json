@@ -1,0 +1,11 @@
+{
+  "$comment": [
+    "Seleção de módulos instalados. Copie para modules.json para usar.",
+    "Sem modules.json e sem MODULES= no ambiente, TODOS os módulos sobem —",
+    "é o padrão, e mantém o comportamento de quem não configura nada.",
+    "\"modules\": \"*\" tem o mesmo efeito que não ter arquivo.",
+    "O loader falha no boot se um módulo listado depender de outro que ficou de fora.",
+    "Ver docs/MODULES.md."
+  ],
+  "modules": ["users", "session", "log", "notification", "loja"]
+}

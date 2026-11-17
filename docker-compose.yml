@@ -1,0 +1,84 @@
+services:
+  api:
+    build:
+      context: .
+      target: production
+    container_name: api-modelo-base-api
+    restart: unless-stopped
+    ports:
+      - "${PORT:-4005}:4005"
+    environment:
+      NODE_ENV: production
+      PORT: 4005
+      APP_WEB_URL: http://localhost
+      CORS: ${CORS:-http://localhost:3000}
+      MONGODB_URI: mongodb://mongo:27017/api_modelo_base
+      MONGODB_URI_DEV: mongodb://mongo:27017/api_modelo_base_dev
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      REDIS_TLS: "false"
+      HTTPS_ENABLED: "false"
+      SECRET: ${SECRET:-change-me-use-a-long-random-secret}
+      REFRESH_SECRET: ${REFRESH_SECRET:-change-me-use-a-different-long-random-secret}
+      SENHA_DEFAULT_USER_AVB: ${SENHA_DEFAULT_USER_AVB:-change-me}
+      FEATURE_METRICS: ${FEATURE_METRICS:-true}
+      FEATURE_HEALTH_CHECK: ${FEATURE_HEALTH_CHECK:-true}
+      FEATURE_RATE_LIMIT: ${FEATURE_RATE_LIMIT:-true}
+      FEATURE_HELMET: ${FEATURE_HELMET:-true}
+      FEATURE_MONGO_SANITIZE: ${FEATURE_MONGO_SANITIZE:-true}
+      FEATURE_CIRCUIT_BREAKER: ${FEATURE_CIRCUIT_BREAKER:-true}
+      FEATURE_REDIS_CACHE: ${FEATURE_REDIS_CACHE:-true}
+      FEATURE_ROUTE_MONITORING: ${FEATURE_ROUTE_MONITORING:-true}
+      FEATURE_SOCKET_MANAGER: ${FEATURE_SOCKET_MANAGER:-false}
+      FEATURE_EMAIL_NOTIFICATIONS: ${FEATURE_EMAIL_NOTIFICATIONS:-false}
+      AD_URL: ${AD_URL:-ldap://seu-servidor-ad:389}
+      DOMAIN_CONTROLLER: ${DOMAIN_CONTROLLER:-seu.dominio.com.br}
+      AZURE_TENANT_ID: ${AZURE_TENANT_ID:-}
+      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID:-}
+      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET:-}
+      MAIL_FROM_USER: ${MAIL_FROM_USER:-}
+    volumes:
+      - api_logs:/app/logs
+      - api_tmp:/app/tmp
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    container_name: api-modelo-base-mongo
+    restart: unless-stopped
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    container_name: api-modelo-base-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+volumes:
+  api_logs:
+  api_tmp:
+  mongo_data:
+  redis_data:
